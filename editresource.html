@@ -1,0 +1,60 @@
+{% autoescape true %}
+<html>
+<head>
+  <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+  <title>Edit Resource</title>
+</head>
+  <body>
+  <ul>
+  <li><a class="active" href="/">Home</a></li>
+  </ul>
+  <br>
+  <br>
+  <form id="editform" action="/editresource" method="post" >  
+  <h1>Edit Resource</h1>
+  <input type="hidden" name = "val" id = "val" value = "{{val}}">
+  
+   <label>Resource Name:</label>    
+  <input type="text" id="name" name = "name" value="{{ resourcename }}"  required>
+  <br>
+  <br>
+  <label>Resource Start Time:</label>    
+  <input type="time" id="starttime" name = "starttime" value="{{ resourcestarttime }}"  required>
+  <br>
+  <br>
+  <label>Resource End Time:</label>    
+  <input type="time" id="endtime" name = "endtime" value="{{ resourceendtime }}" required>
+  <br>
+  <br>
+  <label>Tags:</label>    
+  <input type="text" id="tags" name = "tags" value="{{ resourcetags }}"  required>
+  <br>
+  <br>
+  <input id="submitaddresource" value="Edit" type="button" onclick="return compareTime();" >
+  </form>
+  <script type="text/javascript" >
+  function compareTime() {
+    //In javascript
+    var starttime =document.getElementById("starttime").value.toString().split(':');
+    var endtime=document.getElementById("endtime").value.toString().split(':');
+    console.log(starttime);
+    console.log(endtime);
+    startdate=new Date();
+    startdate.setHours(starttime[0]);
+    startdate.setMinutes(starttime[1]);
+    enddate=new Date();
+    enddate.setHours(endtime[0]);
+    enddate.setMinutes(endtime[1]);
+
+
+    if (startdate > enddate){
+        alert("End time entered is less than start time.Please enter end time greater than start time ");
+        return false;
+     }
+    document.getElementById("editform").submit();
+  }
+  </script>
+  
+  </body>
+</html>
+{% endautoescape %}

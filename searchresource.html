@@ -1,0 +1,67 @@
+{% autoescape true %}
+<html>
+<head>
+  <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+  <title>Search Resource</title>
+</head>
+  <body>
+  <ul>
+  <li><a class="active" href="/">Home</a></li>
+  </ul>
+  <br>
+  <br>
+  <form id="searchform" action="/searchresource" method="post">  
+  <h1>Search Resource by name or by availability</h1>
+  <label>Resource Name:</label>    
+  <input type="text" id="name" name = "name" value="{{ resourcename }}">
+  <br>
+  {% if uierror %}
+  <br>
+  <div class="error">
+  <label>{{uierror}}</label>
+  </div>
+  <br>
+  {% endif %}
+  <br>
+  <label>Resource Availability Time:</label>    
+  <input type="time" id="starttime" name = "starttime" value="{{ resourcestarttime }}">
+  <br>
+  <br>
+  <label>Duration in minutes:</label>    
+  <input type="text" id="duration" name = "duration" value="{{ resourceduration }}">
+  <br>
+  <br>
+  <input id="searchresource" value="Search" type="submit">
+  <br>
+  <br>
+  {% if resourcelist %}
+  <label>All Resources satisfying the search criteria</label>
+  <br>
+  <br>
+  <table class="tagtable" border=1>
+  <thead>
+      <tr>
+         <th>RESOURCE NAME</th>
+         <th>AVAILABILITY</th>
+         <th>RESOURCE OWNER</th>
+         <th>NUMBER OF PAST RESERVATIONS</th>
+              
+      </tr>    
+   </thead> 
+   <tbody>
+      <tr>     
+
+        {% for r in resourcelist %}
+         <td>{{r.name}}</td>
+         <td>{{r.starttime.time()}} - {{r.endtime.time()}}</td>
+         <td>{{r.resourceowner}}</td>
+         <td>{{r.reservedinpastcount}}</td>
+      </tr>
+   </tbody>  
+    {% endfor %}
+   </table>
+   {% endif %}
+   </form>
+ </body>
+</html>
+{% endautoescape %}

@@ -1,0 +1,45 @@
+{% autoescape true %}
+<html>
+<head>
+  <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+  <title>Add Reservation</title>
+</head>
+  <body>
+  <ul>
+  <li><a class="active" href="/">Home</a></li>
+  <li><a class="active" href="/upcomingreservation?rval={{val}}">Upcoming Reservations for the resource</a></li>
+  {% if user==resourceuser %} 
+  <li><a class="active" href="/editresource?rval={{val}}">Edit the resource</a></li>
+  {% endif %}
+  </ul>
+  <br>
+  <br>
+  <h1>Add Reservation</h1>
+  <form id="addreservationform" action="/addreservation" method="post" >  
+  <br>
+  {% if uierror %}
+  <br>
+  <div class="error">
+  <label>{{uierror}}</label>
+  </div>
+  <br>
+  {% endif %}
+  <br>
+   <input type="hidden" name = "val" id = "val" value = "{{val}}">
+    <label>Reservation Start Time:</label>    
+  <input type="time" id="starttime" name = "starttime" value="{{ reservationtime }}"  required>
+  <br>
+  <br>
+  <label>Duration in Minutes:</label>    
+  <input type="text" id="duration" name = "duration" value="{{ reservationduration }}" required>
+  <br>
+  <br>
+  <label>Reservation Date:</label>    
+  <input type="date" id="reservationdate" name = "reservationdate" value="{{ reservationdate }}" required>
+  <br>
+  <br>
+  <input id="submitaddreservation" value="Add reservation" type="submit" >
+  </form>
+  </body>
+</html>
+{% endautoescape %}

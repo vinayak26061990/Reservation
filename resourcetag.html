@@ -1,0 +1,44 @@
+{% autoescape true %}
+<html>
+<head>
+  <title>Reservation System</title>
+  <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+</head>
+  <body>
+  <ul>
+  <li><a class="active" href="/">Home</a></li>
+  </ul>
+  <br>
+  <br>
+  <center><h2>Hello {{user}}!!</h2></center>
+  <br>
+  <br>
+  <label>All Resources with the tag {{tagval}}</label>
+  <table class="tagtable" border=1>
+  <thead>
+      <tr>
+         <th>RESOURCE NAME</th>
+         <th>AVAILABILITY</th>
+         <th>RESOURCE OWNER</th>
+         <th>NUMBER OF PAST RESERVATIONS</th>
+              
+      </tr>    
+   </thead> 
+   <tbody>
+      <tr>     
+        {% if taggedresources %}
+        {% for r in taggedresources %}
+         <td>{{r.name}}</td>
+         <td>{{r.starttime.time()}} - {{r.endtime.time()}}</td>
+         <td>{{r.resourceowner}}</td>
+         <td>{{r.reservedinpastcount}}</td>
+      </tr>
+   </tbody>  
+    {% endfor %}
+    {% endif %}
+   </table>
+   <br>
+   <br>
+   </body>
+</html>
+{% endautoescape %}

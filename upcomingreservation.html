@@ -1,0 +1,54 @@
+{% autoescape true %}
+<html>
+<head>
+  <title>Reservation System</title>
+  <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+</head>
+  <body>
+  <ul>
+  <li><a class="active" href="/">Home</a></li>
+
+  
+  </ul>
+  <br>
+  <br>
+  <center><h2>Hello {{user}}!!</h2></center>
+  <br>
+  <br>
+  <label>All upcoming Reservations for the resource</label>
+  <form id="upcomingreservations" action="/upcomingreservation" method="get" >  
+  <table class="tagtable" border=1>
+  <thead>
+      <tr>
+         <th>RESOURCE NAME</th>
+         <th>USER</th>
+         <th>RESERVATION TIME</th>
+         <th>RESERVATION DATE</th>
+         <th>DURATION</th>
+         <th>DELETE RESERVATION</th>
+         
+      </tr>    
+   </thead>
+   <tbody>
+      <tr>     
+        {% if UpcomingReservations %}
+        {% for r in UpcomingReservations %}
+         <td><a href="/resourceinfo?rval={{r.reservationowner}}">{{r.resourcename}}</a></td>
+         <td>{{r.reservationowner}}</td>
+         <td>{{r.reservationtime.time()}}</td>
+         <td>{{r.reservationtime.date()}}</td>
+         <td>{{r.reservationduration}}</td>
+         {% if user == r.reservationowner %}
+         <td><a href="/deletereservation?rval={{r.reservationid}}">DELETE</a></td>
+         {% endif %}
+         </tr>
+   </tbody>  
+    {% endfor %}
+    {% endif %}
+   </table>
+   </form>
+   <br>
+   <br>
+   </body>
+</html>
+{% endautoescape %}

@@ -1,0 +1,42 @@
+{% autoescape true %}
+<html>
+<head>
+<title>Reservation System</title>
+<link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+</head>
+<body>
+<ul>
+<li><a class="active" href="/">Home</a></li>
+</ul>
+<br>
+<br>
+<h1>RSS Feed for resource {{resourcename}}</h1>
+<p>
+<xmp>
+<?xml version=\"1.0\" encoding=\"utf-8\"?>
+<rss version=\"2.0\">
+<channel>
+<title>RSS Feed for Reservations of the Resource {{resourcename}}</title>
+<link>https://reservation-267.appspot.com/addreservation?rval={{val}}</link>
+</xmp>
+</p>
+{% if allreservations %}
+{% for r in allreservations %}
+<p>
+<xmp>
+<description>
+The reservation is created at {{r.reservationtime.time()}} for a duration {{r.reservationduration}} minutes on {{r.reservationtime.date()}}.
+</description>
+</xmp>
+</p>
+{% endfor %}
+{% endif %}
+<p>
+<xmp>
+</channel>
+</rss>
+</xmp>
+</p>
+</body>
+</html>
+{% endautoescape %}
