@@ -41,7 +41,7 @@ class Reservation(ndb.Model):
     reservationowner = ndb.StringProperty(indexed=True)
     resourcename = ndb.StringProperty()
     resourceId = ndb.StringProperty(indexed=True)
-
+    reservationmadetime=ndb.DateTimeProperty(indexed=True)
 
 # def get_key_directly():
 #    return ndb.Key('Resource', 'RESOURCE_KEY')
@@ -268,6 +268,8 @@ class Addreservation(webapp2.RequestHandler):
             error = 'The resource ' + r.name + ' cannot be reserved for the given duration as it is outside the available time range of resource.'
         elif reservationdate < currentdatetime.date():
             error = 'The reservation date cannot be a past day'
+        elif availabilitystarttime < currentdatetime:
+            error = 'The reservation time cannot be a past time'    
         if error:
             template = JINJA_ENVIRONMENT.get_template('addReservation.html')
             template_values = {
@@ -288,7 +290,8 @@ class Addreservation(webapp2.RequestHandler):
             res.reservationid = resourcename
             res.resourcename = r.name
             res.resourceId = r.resourceid
-            r.lastmadereservation = availabilitystarttime
+            res.reservationmadetime=currentdatetime
+            r.lastmadereservation = currentdatetime
             r.reservedinpastcount = r.reservedinpastcount + 1
             r.put()
             uid = uuid.uuid1()
