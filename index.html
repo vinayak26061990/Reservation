@@ -64,6 +64,7 @@
          <th>AVAILABILITY</th>
          <th>TAGS</th>
          <th>NUMBER OF PAST RESERVATIONS</th>
+         <th>LAST RESERVATION</th>
       </tr>    
    </thead> 
    <tbody>
@@ -79,6 +80,7 @@
         {% endfor %}
         </td>
         <td>{{r.reservedinpastcount}}</td>
+        <td>{{r.lastmadereservation}}</td>
       </tr>
    </tbody>  
     {% endfor %}
@@ -98,6 +100,8 @@
          <th>AVAILABILITY</th>
          <th>TAGS</th>
          <th>NUMBER OF PAST RESERVATIONS</th>
+         <th>LAST RESERVATION</th>
+
          
       </tr>    
    </thead> 
@@ -116,6 +120,7 @@
         {% endfor %}
         </td>
         <td>{{r.reservedinpastcount}}</td>
+        <td>{{r.lastmadereservation}}</td>
       </tr>
    </tbody>  
     {% endfor %}

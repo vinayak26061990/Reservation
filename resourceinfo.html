@@ -35,8 +35,8 @@
       <tr>     
         {% if reservations %}
         {% for r in reservations %}
-         <td>{{r.resourcename}}</td>
-         <td>{{user}}</td>
+         <td><a href="/addreservation?rval={{r.resourceId}}">{{r.resourcename}}</a></td>
+         <td><a href="/resourceinfo?rval={{r.reservationowner}}">{{user}}</a></td>
          <td>{{r.reservationtime.time()}}</td>
          <td>{{r.reservationtime.date()}}</td>
          <td>{{r.reservationduration}}</td>
@@ -70,7 +70,7 @@
       <tr>     
         {% if ownerresources %}
         {% for r in ownerresources %}
-         <td>{{r.name}}</td>
+         <td><a href="/addreservation?rval={{r.resourceid}}">{{r.name}}</a></td>
          <td>{{r.starttime.time()}} - {{r.endtime.time()}}</td>
         <td>
         {% for t in r.tags %}

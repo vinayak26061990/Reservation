@@ -14,6 +14,7 @@ import os
 from google.appengine.api import mail
 from google.appengine.ext.webapp import template
 import jinja2
+import time
 
 JINJA_ENVIRONMENT =  jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),extensions=['jinja2.ext.autoescape'],autoescape=True)
 
@@ -43,12 +44,6 @@ class Reservation(ndb.Model):
     resourceId = ndb.StringProperty(indexed=True)
     reservationmadetime=ndb.DateTimeProperty(indexed=True)
 
-# def get_key_directly():
-#    return ndb.Key('Resource', 'RESOURCE_KEY')
-
-
-# def get_reservationkey_directly():
-#    return ndb.Key('Reservation', 'RESERVATION_KEY')
 
 def getallresourcesbyowner(owner):
     query = Resource.query()
@@ -88,8 +83,8 @@ def getallreservationsbyuser(reservationowner):
                                    == reservationowner).order(Reservation.reservationtime).fetch()
     newreservations = []
     for r in allreservations:
-        current_date = datetime.datetime.now() \
-            - datetime.timedelta(hours=4)
+    # Coordinated Universal Time is 4 hours ahead of New York, NY
+        current_date = datetime.datetime.now() - datetime.timedelta(hours=4)
         end_date = r.reservationtime \
             + datetime.timedelta(minutes=int(r.reservationduration))
         if current_date <= end_date:
@@ -143,7 +138,6 @@ class AddResource(webapp2.RequestHandler):
         availabilitystarttime = datetime.datetime.combine(currentdatetime.date(),datetime.time(starthour, startminute))
         availabilityendtime = datetime.datetime.combine(currentdatetime.date(),datetime.time(endhour, endminute))
         r = Resource()
-        # r = Resource(parent=get_key_directly())
         r.name = resourcename
         r.resourceowner = str(users.get_current_user().email())
         r.tags = resourcetags
@@ -167,7 +161,6 @@ class SearchResource(webapp2.RequestHandler):
 
     def post(self):
 
-        # template = JINJA_ENVIRONMENT.get_template('addResource.html')
         flag=0
         if self.request.get('name'):
          resourcename = self.request.get('name')
@@ -181,8 +174,7 @@ class SearchResource(webapp2.RequestHandler):
         error = ''
         query = Resource.query()
         if flag==1:
-            resourcelist = query.filter(Resource.name
-                    == resourcename).order(-Resource.lastmadereservation).fetch()
+            resourcelist = query.filter(Resource.name == resourcename).order(-Resource.lastmadereservation).fetch()
         elif flag==2:
             allresources=getallresources()
             starthour=int(resourcestarttime.strip().split(':')[0])
@@ -190,16 +182,9 @@ class SearchResource(webapp2.RequestHandler):
             availabilitydate = datetime.datetime.now()- datetime.timedelta(hours=4)
             availabilitystarttime = datetime.datetime.combine(availabilitydate.date(),datetime.time(starthour, startminute))
             availabilityendtime = availabilitystarttime + datetime.timedelta(minutes=resourceduration)
-            #logging.info('availability start time')
-            #logging.info(availabilitystarttime.time())
-            #logging.info('availability end time')
-            #logging.info(availabilityendtime)
+
 
             for r in query:
-                #logging.info('resource end time is')
-                #logging.info(r.endtime)
-                #logging.info('resource start time is')
-                #logging.info(r.starttime)
                 if (availabilitystarttime.time()>=r.starttime.time()  and availabilityendtime.time()<=r.endtime.time() ):
                     resourcelist.append(r) 
         else:
@@ -240,23 +225,13 @@ class Addreservation(webapp2.RequestHandler):
         availabilityendtime = availabilitystarttime + datetime.timedelta(minutes=reservationduration)
         error = ''
 
+        # Coordinated Universal Time is 4 hours ahead of New York, NY
         currentdatetime=datetime.datetime.now() - datetime.timedelta(hours=4)
         r = getresourcebyval(resourcename)
         query = Reservation.query()
         allreservations = query.filter(Reservation.reservationowner==reservationowner).fetch()
         ###########Checking for Overlapping of Reservations for the same user###################
         for a in allreservations:
-            logging.info("input availablility end time")
-            logging.info(availabilityendtime)
-            logging.info("input availablility start time")
-            logging.info(availabilitystarttime)
-            logging.info("reservation end time")
-            logging.info(a.reservationendtime)
-            logging.info("reservation start time")
-            logging.info(a.reservationtime)
-            #delta = min(availabilityendtime,a.reservationendtime)-max(availabilitystarttime,a.reservationtime)
-            #if delta.seconds < 0:
-            #logging.info(delta.seconds)
             if (a.reservationtime >=availabilitystarttime and a.reservationtime <=availabilityendtime and a.reservationendtime >=availabilitystarttime  and a.reservationendtime <=availabilityendtime) or (availabilitystarttime >= a.reservationtime   and availabilitystarttime <=a.reservationendtime) or (availabilityendtime >=a.reservationtime  and availabilityendtime <=a.reservationendtime):
                 error='You cannot create a reservation for the following period as it is overlapping with an existing reservation.' 
                 break 
@@ -281,7 +256,6 @@ class Addreservation(webapp2.RequestHandler):
             self.response.write(template.render(template_values))
         else:
 
-            # res = Reservation(parent=get_reservationkey_directly())
             res = Reservation()
             res.reservationtime = availabilitystarttime
             res.reservationowner = reservationowner
@@ -298,19 +272,6 @@ class Addreservation(webapp2.RequestHandler):
             uid_str = uid.urn
             res.reservationid = uid_str[9:]
             res.put()
-            message = mail.EmailMessage()
-            message.sender = 'vr840@nyu.edu'
-            message.to = [users.get_current_user().email()]
-            message.subject = 'Reservation Created for Resource ' \
-                + r.name
-            message.body = \
-                """Dear Sir/Madam,Your reservation has been created for the resource """ \
-                + r.name + """The reservation is created on """ \
-                + str(res.reservationtime) + """ for a duration """ \
-                + str(reservationduration) + """ minutes.""" \
-                + """Please let us know if you have any questions.The Reservation System Team"""
-            message.check_initialized()
-            message.send()
             self.redirect('/')
 
 
@@ -337,18 +298,16 @@ class EditResource(webapp2.RequestHandler):
         resourcetags = self.request.get('tags').strip().split(',')
         resourcestarttime = self.request.get('starttime')
         resourceendtime = self.request.get('endtime')
-        #logging.info("start time is")
-        #logging.info(resourcestarttime)
 
         starthour = int(resourcestarttime.strip().split(':')[0])
         startminute=int(resourcestarttime.strip().split(':')[1])  
         endhour=int(resourceendtime.strip().split(':')[0])
         endminute=int(resourceendtime.strip().split(':')[1])
-        currentdatetime=datetime.datetime.now() - datetime.timedelta(hours=4)
 
+        # Coordinated Universal Time is 4 hours ahead of New York, NY
+        currentdatetime=datetime.datetime.now() - datetime.timedelta(hours=4)
         availabilitystarttime = datetime.datetime.combine(currentdatetime.date(),datetime.time(starthour, startminute))
         availabilityendtime =  datetime.datetime.combine(currentdatetime.date(),datetime.time(endhour, endminute))
-        # r = Resource(parent=resource_key())
         val = str(self.request.get('val'))
         r = getresourcebyval(val)
         r.name = resourcename
@@ -383,10 +342,10 @@ class UpcomingReservations(webapp2.RequestHandler):
         query = Reservation.query()
         allreservations = query.filter(Reservation.resourceId == res.resourceid).order(Reservation.reservationtime).fetch()
         newreservations = []
+
         # Coordinated Universal Time is 4 hours ahead of New York, NY
         currentdatetime=datetime.datetime.now() - datetime.timedelta(hours=4)
         for r in allreservations:
-            #end_date = r.reservationtime + datetime.timedelta(minutes=int(r.reservationduration))
             if currentdatetime <= r.reservationendtime:
                 newreservations.append(r)
         template_values = {'UpcomingReservations': newreservations,

@@ -28,7 +28,7 @@
       <tr>     
         {% if taggedresources %}
         {% for r in taggedresources %}
-         <td>{{r.name}}</td>
+         <td><a href="/addreservation?rval={{r.resourceid}}">{{r.name}}</a></td>
          <td>{{r.starttime.time()}} - {{r.endtime.time()}}</td>
          <td>{{r.resourceowner}}</td>
          <td>{{r.reservedinpastcount}}</td>

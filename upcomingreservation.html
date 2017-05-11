@@ -33,8 +33,11 @@
       <tr>     
         {% if UpcomingReservations %}
         {% for r in UpcomingReservations %}
-         <td><a href="/resourceinfo?rval={{r.reservationowner}}">{{r.resourcename}}</a></td>
-         <td>{{r.reservationowner}}</td>
+         <td>
+          <a href="/resourceinfo?rval={{r.reservationowner}}">{{r.resourcename}}</a>
+          <a href="/generateRSS?rval={{r.resourceid}}"><img src="/stylesheets/rss.png" style="width:10px;height:10px;"></a>
+        </td>
+         <td><a href="/resourceinfo?rval={{r.reservationowner}}">{{r.reservationowner}}</td>
          <td>{{r.reservationtime.time()}}</td>
          <td>{{r.reservationtime.date()}}</td>
          <td>{{r.reservationduration}}</td>
