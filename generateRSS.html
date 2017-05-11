@@ -24,9 +24,12 @@
 {% for r in allreservations %}
 <p>
 <xmp>
+ <item>
+ <title>Reservation Entry</title>	
 <description>
-The reservation is created at {{r.reservationtime.time()}} for a duration {{r.reservationduration}} minutes on {{r.reservationtime.date()}}.
+The reservation is created by {{r.reservationowner}} at {{r.reservationtime.time()}} for a duration {{r.reservationduration}} minutes on {{r.reservationtime.date()}}.
 </description>
+</item>
 </xmp>
 </p>
 {% endfor %}
