@@ -36,7 +36,9 @@
       <tr>     
         {% if reservations %}
         {% for r in reservations %}
-         <td><a href="/addreservation?rval={{r.resourceId}}">{{r.resourcename}}</a></td>
+         <td><a href="/addreservation?rval={{r.resourceId}}">{{r.resourcename}}</a>
+             <a href="/generateRSS?rval={{r.resourceId}}"><img src="/stylesheets/rss.png" style="width:10px;height:10px;"></a>
+         </td>
          <td><a href="/resourceinfo?rval={{r.reservationowner}}">{{r.reservationowner}}</a></td>
          <td>{{r.reservationtime.time()}}</td>
          <td>{{r.reservationtime.date()}}</td>

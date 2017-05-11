@@ -28,9 +28,11 @@
       <tr>     
         {% if taggedresources %}
         {% for r in taggedresources %}
-         <td><a href="/addreservation?rval={{r.resourceid}}">{{r.name}}</a></td>
+         <td><a href="/addreservation?rval={{r.resourceid}}">{{r.name}}</a>
+             <a href="/generateRSS?rval={{r.resourceid}}"><img src="/stylesheets/rss.png" style="width:10px;height:10px;"></a>
+         </td>
          <td>{{r.starttime.time()}} - {{r.endtime.time()}}</td>
-         <td>{{r.resourceowner}}</td>
+         <td><a href="/resourceinfo?rval={{r.resourceowner}}">{{r.resourceowner}}</a></td>
          <td>{{r.reservedinpastcount}}</td>
       </tr>
    </tbody>  

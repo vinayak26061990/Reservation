@@ -131,26 +131,34 @@ class AddResource(webapp2.RequestHandler):
         resourcetags = self.request.get('tags').split(',')
         resourcestarttime = self.request.get('starttime')
         resourceendtime = self.request.get('endtime')
-        starthour=int(resourcestarttime.strip().split(':')[0])
-        startminute=int(resourcestarttime.strip().split(':')[1])
-        endhour=int(resourceendtime.strip().split(':')[0])
-        endminute=int(resourceendtime.strip().split(':')[1])
-        currentdatetime=datetime.datetime.now() - datetime.timedelta(hours=4)
-        availabilitystarttime = datetime.datetime.combine(currentdatetime.date(),datetime.time(starthour, startminute))
-        availabilityendtime = datetime.datetime.combine(currentdatetime.date(),datetime.time(endhour, endminute))
-        r = Resource()
-        r.name = resourcename
-        r.resourceowner = str(users.get_current_user().email())
-        r.tags = resourcetags
-        r.starttime = availabilitystarttime
-        r.endtime = availabilityendtime
-        r.reservedinpastcount=0
-        r.count = 0
-        uid = uuid.uuid1()
-        uid_str = uid.urn
-        r.resourceid = uid_str[9:]
-        r.put()
-        self.redirect('/')
+
+        if (resourcename and resourcestarttime and resourceendtime):
+          starthour=int(resourcestarttime.strip().split(':')[0])
+          startminute=int(resourcestarttime.strip().split(':')[1])
+          endhour=int(resourceendtime.strip().split(':')[0])
+          endminute=int(resourceendtime.strip().split(':')[1])
+          currentdatetime=datetime.datetime.now() - datetime.timedelta(hours=4)
+          availabilitystarttime = datetime.datetime.combine(currentdatetime.date(),datetime.time(starthour, startminute))
+          availabilityendtime = datetime.datetime.combine(currentdatetime.date(),datetime.time(endhour, endminute))
+          r = Resource()
+          r.name = resourcename
+          r.resourceowner = str(users.get_current_user().email())
+          r.tags = resourcetags
+          r.starttime = availabilitystarttime
+          r.endtime = availabilityendtime
+          r.reservedinpastcount=0
+          r.count = 0
+          uid = uuid.uuid1()
+          uid_str = uid.urn
+          r.resourceid = uid_str[9:]
+          r.put()
+          self.redirect('/')
+
+        else:
+            error = 'You have to provide name, start time and duration'  
+            template = JINJA_ENVIRONMENT.get_template('addResource.html')
+            template_values = {'uierror': error}
+            self.response.write(template.render(template_values))
 
 
 class SearchResource(webapp2.RequestHandler):
@@ -237,7 +245,8 @@ class Addreservation(webapp2.RequestHandler):
                 error='You cannot create a reservation for the following period as it is overlapping with an existing reservation.' 
                 break 
         ###########Checking for Resource Availability###################
- 
+        
+        timediff= int((r.endtime- r.starttime).total_seconds() / 60)
         if r is None:
             error = 'The resource is not present'
         elif r.starttime.time() > availabilitystarttime.time()  or r.endtime.time() < availabilityendtime.time():
@@ -246,6 +255,10 @@ class Addreservation(webapp2.RequestHandler):
             error = 'The reservation date cannot be a past day'
         elif availabilitystarttime < currentdatetime:
             error = 'The reservation time cannot be a past time'    
+        elif  reservationduration > timediff:  
+            error = 'The resource ' + r.name + ' cannot be reserved for the given duration as it is outside the available time range of resource.'
+
+
         if error:
             template = JINJA_ENVIRONMENT.get_template('addReservation.html')
             template_values = {

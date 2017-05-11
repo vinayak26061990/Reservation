@@ -10,12 +10,6 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
-- kind: Resource
-  properties:
-  - name: resourceowner
-  - name: lastmadereservation
-    direction: desc
-
 - kind: Reservation
   properties:
   - name: reservationowner
