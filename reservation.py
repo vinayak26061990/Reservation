@@ -34,7 +34,9 @@ class Resource(ndb.Model):
 
 
 class Reservation(ndb.Model):
+
     """Models an individual reservation"""
+
     reservationid = ndb.StringProperty(indexed=True)
     reservationtime = ndb.DateTimeProperty(auto_now_add=False)
     reservationendtime = ndb.DateTimeProperty(auto_now_add=False)
@@ -85,8 +87,7 @@ def getallreservationsbyuser(reservationowner):
     for r in allreservations:
     # Coordinated Universal Time is 4 hours ahead of New York, NY
         current_date = datetime.datetime.now() - datetime.timedelta(hours=4)
-        end_date = r.reservationtime \
-            + datetime.timedelta(minutes=int(r.reservationduration))
+        end_date = r.reservationtime + datetime.timedelta(minutes=int(r.reservationduration))
         if current_date <= end_date:
             newreservations.append(r)
     return newreservations
@@ -329,7 +330,8 @@ class generateRSS(webapp2.RequestHandler):
                 == res.resourceid).order(Reservation.reservationtime).fetch()
         resourcename = res.name
         template = JINJA_ENVIRONMENT.get_template('generateRSS.html')
-        template_values = {'val': val, 'resourcename': resourcename,
+        template_values = {'val': val, 
+                           'resourcename': resourcename,
                            'allreservations': allreservations}
         self.response.write(template.render(template_values))
 
