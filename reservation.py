@@ -394,7 +394,8 @@ class Resourceinfo(webapp2.RequestHandler):
         ownerreservations = getallreservationsbyuser(val)
         template_values = {'ownerresources': ownerresources,
                            'reservations': ownerreservations,
-                           'user': users.get_current_user().email()}
+                           'user': users.get_current_user().email(),
+                           'userinput':val}
         template = JINJA_ENVIRONMENT.get_template('resourceinfo.html')
         self.response.write(template.render(template_values))
 
@@ -423,6 +424,3 @@ application = webapp2.WSGIApplication([
     ('/generateRSS', generateRSS),
     ('/searchresource', SearchResource),
     ], debug=True)
-
-
-            

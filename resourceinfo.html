@@ -15,7 +15,7 @@
   <center><h2>Hello {{user}}!!</h2></center>
   <br>
   <br>
-  <label>All Reservations for the user {{user}}</label>
+  <label>All Reservations for the user {{userinput}}</label>
   <br>
   <br>
   <form id="deletereservation" action="/deletereservation" method="post" >  
@@ -55,7 +55,7 @@
    <br>
    <br>
    <br>
-   <label>All Resources created by the user {{user}}</label>
+   <label>All Resources created by the user {{userinput}}</label>
   <br>
   <br>
   <table class="tagtable" border=1>
@@ -73,7 +73,7 @@
         {% if ownerresources %}
         {% for r in ownerresources %}
          <td><a href="/addreservation?rval={{r.resourceid}}">{{r.name}}</a>
-             <a href="/generateRSS?rval={{r.resourceid}}"><img src="/stylesheets/rss.png" style="width:10px;height:10px;"></a>
+         <a href="/generateRSS?rval={{r.resourceid}}"><img src="/stylesheets/rss.png" style="width:10px;height:10px;"></a>
          </td>
          <td>{{r.starttime.time()}} - {{r.endtime.time()}}</td>
         <td>

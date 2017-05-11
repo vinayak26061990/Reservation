@@ -44,7 +44,6 @@
          <th>RESOURCE NAME</th>
          <th>AVAILABILITY</th>
          <th>RESOURCE OWNER</th>
-         <th>TAGS</th>
          <th>NUMBER OF PAST RESERVATIONS</th>
               
       </tr>    
@@ -57,12 +56,7 @@
              <a href="/generateRSS?rval={{r.resourceid}}"><img src="/stylesheets/rss.png" style="width:10px;height:10px;"></a>
          </td>
          <td>{{r.starttime.time()}} - {{r.endtime.time()}}</td>
-         <td>{{r.resourceowner}}</td>
-         <td>
-         {% for t in r.tags %}
-         <a href="/resourcetag?tagval={{t}}">&nbsp&nbsp&nbsp{{t}}</a>  
-         {% endfor %}
-         </td>
+         <td><a href="/resourceinfo?rval={{r.resourceowner}}">{{r.resourceowner}}</a></td>
          <td>{{r.reservedinpastcount}}</td>
       </tr>
    </tbody>  

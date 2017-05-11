@@ -27,15 +27,15 @@
   <br>
    <input type="hidden" name = "val" id = "val" value = "{{val}}">
     <label>Reservation Start Time:</label>    
-  <input type="time" id="starttime" name = "starttime" required value="{{ reservationtime }}"  >
+  <input type="time" id="starttime" name = "starttime" value="{{ reservationtime }}"  required>
   <br>
   <br>
   <label>Duration in Minutes:</label>    
-  <input type="text" id="duration" name = "duration" required value="{{ reservationduration }}" >
+  <input type="text" id="duration" name = "duration" value="{{ reservationduration }}" required>
   <br>
   <br>
   <label>Reservation Date:</label>    
-  <input type="date" id="reservationdate" name = "reservationdate" required value="{{ reservationdate }}" >
+  <input type="date" id="reservationdate" name = "reservationdate" value="{{ reservationdate }}" required>
   <br>
   <br>
   <input id="submitaddreservation" value="Add reservation" type="submit" >

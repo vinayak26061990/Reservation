@@ -66,7 +66,6 @@
          <th>AVAILABILITY</th>
          <th>TAGS</th>
          <th>NUMBER OF PAST RESERVATIONS</th>
-         <th>LAST RESERVATION</th>
       </tr>    
    </thead> 
    <tbody>
@@ -74,7 +73,7 @@
         {% if resources %}
         {% for r in resources %}
          <td><a href="/addreservation?rval={{r.resourceid}}">{{r.name}}</a>
-        <a href="/generateRSS?rval={{r.resourceid}}"><img src="/stylesheets/rss.png" style="width:10px;height:10px;"></a>
+             <a href="/generateRSS?rval={{r.resourceid}}"><img src="/stylesheets/rss.png" style="width:10px;height:10px;"></a>
         <td>{{r.starttime.time()}} - {{r.endtime.time()}}</td>
         <td>
         {% for t in r.tags %}
@@ -82,7 +81,6 @@
         {% endfor %}
         </td>
         <td>{{r.reservedinpastcount}}</td>
-        <td>{{r.lastmadereservation}}</td>
       </tr>
    </tbody>  
     {% endfor %}
@@ -102,8 +100,6 @@
          <th>AVAILABILITY</th>
          <th>TAGS</th>
          <th>NUMBER OF PAST RESERVATIONS</th>
-         <th>LAST RESERVATION</th>
-
          
       </tr>    
    </thead> 
@@ -122,7 +118,6 @@
         {% endfor %}
         </td>
         <td>{{r.reservedinpastcount}}</td>
-        <td>{{r.lastmadereservation}}</td>
       </tr>
    </tbody>  
     {% endfor %}

@@ -94,3 +94,8 @@ h1 {
     font-family: 'Hammersmith One', sans-serif;
     position: relative;
 }
+ .disabled {
+        pointer-events: none;
+        cursor: default;
+        opacity: 0.6;
+    }

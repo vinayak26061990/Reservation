@@ -13,8 +13,8 @@
 <h1>RSS Feed for resource {{resourcename}}</h1>
 <p>
 <xmp>
-<?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0">
+<?xml version=\"1.0\" encoding=\"utf-8\"?>
+<rss version=\"2.0\">
 <channel>
 <title>RSS Feed for Reservations of the Resource {{resourcename}}</title>
 <link>https://reservation-267.appspot.com/addreservation?rval={{val}}</link>
@@ -24,12 +24,9 @@
 {% for r in allreservations %}
 <p>
 <xmp>
-<item>	
-<title>Reservation Entry</title>
 <description>
 The reservation is created at {{r.reservationtime.time()}} for a duration {{r.reservationduration}} minutes on {{r.reservationtime.date()}}.
 </description>
-</item>
 </xmp>
 </p>
 {% endfor %}

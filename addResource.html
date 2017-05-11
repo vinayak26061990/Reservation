@@ -12,30 +12,23 @@
   <br>
   <form id="addform" action="/addResource"  method="post" > 
     <h1>Add Resource</h1>
-  {% if uierror %}
-  <br>
-  <div class="error">
-  <label>{{uierror}}</label>
-  </div>
-  <br>
-  {% endif %}
    <label>Resource Name:</label>    
-  <input type="text" id="name" name = "name" required value="{{ resourcename }}">
+  <input type="text" id="name" name = "name" value="{{ resourcename }}"  required>
   <br>
   <br>
   <label>Resource Start Time:</label>    
-  <input type="time" id="starttime" name = "starttime" required value="{{ resourcestarttime }}">
+  <input type="time" id="starttime" name = "starttime" value="{{ resourcestarttime }}"  required>
   <br>
   <br>
   <label>Resource End Time:</label>    
-  <input type="time" id="endtime" name = "endtime" required value="{{ resourceendtime }}">
+  <input type="time" id="endtime" name = "endtime" value="{{ resourceendtime }}" required>
   <br>
   <br>
-  <label>Tags(If multiple then comma separated):</label>    
-  <input type="text" id="tags" name = "tags" value="{{ resourcetags }}">
+  <label>Tags:</label>    
+  <input type="text" id="tags" name = "tags" value="{{ resourcetags }}"  required>
   <br>
   <br>
-  <input id="submitaddresource" value="Add" type="button" onclick="return compareTime();">
+  <input id="submitaddresource" value="Add" type="button" onclick="return compareTime();" >
   </form>
   <script type="text/javascript" >
   function compareTime() {
