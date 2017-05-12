@@ -42,6 +42,8 @@
          <td  class="cell">{{r.reservationduration}}</td>
          {% if user == r.reservationowner %}
          <td  class="cell"><a href="/deletereservation?rval={{r.reservationid}}">DELETE</a></td>
+         {% else %}
+         <td  class="cell"></a></td>
          {% endif %}
       </tr>
       {% endfor %}
