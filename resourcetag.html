@@ -10,30 +10,30 @@
   </ul>
   <br>
   <br>
-  <center><h2>Hello {{user}}!!</h2></center>
+  <center><h2>Welcome {{user}}!!</h2></center>
   <br>
+  <h3>All Resources with the tag {{tagval}}</h3>
   <br>
-  <label>All Resources with the tag {{tagval}}</label>
-  <table class="tagtable" border=1>
+  <table class="table" border=1>
   <thead>
-      <tr>
-         <th>RESOURCE NAME</th>
-         <th>AVAILABILITY</th>
-         <th>RESOURCE OWNER</th>
-         <th>NUMBER OF PAST RESERVATIONS</th>
+      <tr class="row header">
+         <th class="cell">RESOURCE NAME</th>
+         <th class="cell">AVAILABILITY</th>
+         <th class="cell">RESOURCE OWNER</th>
+         <th class="cell">NUMBER OF PAST RESERVATIONS</th>
               
       </tr>    
    </thead> 
    <tbody>
-      <tr>     
+      <tr class="row">     
         {% if taggedresources %}
         {% for r in taggedresources %}
-         <td><a href="/addreservation?rval={{r.resourceid}}">{{r.name}}</a>
+         <td class="cell"><a href="/addreservation?rval={{r.resourceid}}">{{r.name}}</a>
              <a href="/generateRSS?rval={{r.resourceid}}"><img src="/stylesheets/rss.png" style="width:10px;height:10px;"></a>
          </td>
-         <td>{{r.starttime.time()}} - {{r.endtime.time()}}</td>
-         <td><a href="/resourceinfo?rval={{r.resourceowner}}">{{r.resourceowner}}</a></td>
-         <td>{{r.reservedinpastcount}}</td>
+         <td class="cell">{{r.starttime.time()}} - {{r.endtime.time()}}</td>
+         <td class="cell"><a href="/resourceinfo?rval={{r.resourceowner}}">{{r.resourceowner}}</a></td>
+         <td class="cell">{{r.reservedinpastcount}}</td>
       </tr>
    </tbody>  
     {% endfor %}

@@ -184,6 +184,9 @@ class SearchResource(webapp2.RequestHandler):
         query = Resource.query()
         if flag==1:
             resourcelist = query.filter(Resource.name == resourcename).order(-Resource.lastmadereservation).fetch()
+            if not resourcelist:
+               error = 'No resources found with the name ' + resourcename
+
         elif flag==2:
             allresources=getallresources()
             starthour=int(resourcestarttime.strip().split(':')[0])
@@ -196,6 +199,9 @@ class SearchResource(webapp2.RequestHandler):
             for r in query:
                 if (availabilitystarttime.time()>=r.starttime.time()  and availabilityendtime.time()<=r.endtime.time() ):
                     resourcelist.append(r) 
+
+            if not resourcelist:
+               error = 'No resources found for the following start time and duration'
         else:
             error = 'You have to provide either name or both availability start time and duration'
 

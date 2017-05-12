@@ -12,36 +12,37 @@
   </ul>
   <br>
   <br>
-  <center><h2>Hello {{user}}!!</h2></center>
+  <center><h2>Welcome {{user}}!!</h2></center>
   <br>
   <br>
-  <label>All upcoming Reservations for the resource</label>
+  <h3>All upcoming Reservations for the resource</h3>
+  <br>
   <form id="upcomingreservations" action="/upcomingreservation" method="get" >  
-  <table class="tagtable" border=1>
+  <table class="table" border=1>
   <thead>
-      <tr>
-         <th>RESOURCE NAME</th>
-         <th>USER</th>
-         <th>RESERVATION TIME</th>
-         <th>RESERVATION DATE</th>
-         <th>DURATION</th>
-         <th>DELETE RESERVATION</th>
+      <tr class="row header">
+         <th class="cell">RESOURCE NAME</th>
+         <th class="cell">USER</th>
+         <th class="cell">RESERVATION TIME</th>
+         <th class="cell">RESERVATION DATE</th>
+         <th class="cell">DURATION</th>
+         <th class="cell">DELETE RESERVATION</th>
          
       </tr>    
    </thead>
    <tbody>
-      <tr>     
+      <tr class="row">     
         {% if UpcomingReservations %}
         {% for r in UpcomingReservations %}
-         <td><a href="/addreservation?rval={{r.resourceId}}">{{r.resourcename}}</a>
+         <td class="cell"><a href="/addreservation?rval={{r.resourceId}}">{{r.resourcename}}</a>
              <a href="/generateRSS?rval={{r.resourceId}}"><img src="/stylesheets/rss.png" style="width:10px;height:10px;"></a>
          </td>
-         <td><a href="/resourceinfo?rval={{r.reservationowner}}">{{r.reservationowner}}</a></td>
-         <td>{{r.reservationtime.time()}}</td>
-         <td>{{r.reservationtime.date()}}</td>
-         <td>{{r.reservationduration}}</td>
+         <td class="cell"><a href="/resourceinfo?rval={{r.reservationowner}}">{{r.reservationowner}}</a></td>
+         <td class="cell">{{r.reservationtime.time()}}</td>
+         <td class="cell">{{r.reservationtime.date()}}</td>
+         <td class="cell">{{r.reservationduration}}</td>
          {% if user == r.reservationowner %}
-         <td><a href="/deletereservation?rval={{r.reservationid}}">DELETE</a></td>
+         <td class="cell"><a href="/deletereservation?rval={{r.reservationid}}">DELETE</a></td>
          {% endif %}
          </tr>
    </tbody>  
@@ -49,7 +50,6 @@
     {% endif %}
    </table>
    </form>
-   <br>
    <br>
    </body>
 </html>

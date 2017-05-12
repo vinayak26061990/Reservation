@@ -13,38 +13,37 @@
   </ul>
   <br>
   <br>
-  <center><h2>Hello {{user}}!!</h2></center>
+  <center><h2>Welcome {{user}}!!</h2></center>
   <br>
   <br>
-  <label>All Reservations for the user</label>
-  <br>
-   <br>
   <form id="deletereservation" action="/deletereservation" method="post" >  
-  <table class="tagtable" border=1>
+  <h3>All Reservations for the user</h3>
+  <br>
+  <table class= "table" border=1>
   <thead>
-      <tr>
-         <th>RESOURCE NAME</th>
-         <th>USER</th>
-         <th>RESERVATION TIME</th>
-         <th>RESERVATION DATE</th>
-         <th>DURATION</th>
-         <th>DELETE RESERVATION</th>
+      <tr class="row header">
+         <th class="cell">RESOURCE NAME</th>
+         <th class="cell">USER</th>
+         <th class="cell">RESERVATION TIME</th>
+         <th class="cell">RESERVATION DATE</th>
+         <th class="cell">DURATION</th>
+         <th class="cell">DELETE RESERVATION</th>
          
       </tr>    
    </thead>
    <tbody>
-      <tr>     
+      <tr class="row">     
         {% if reservations %}
         {% for r in reservations %}
-         <td><a href="/addreservation?rval={{r.resourceId}}">{{r.resourcename}}</a>
+         <td class="cell"><a href="/addreservation?rval={{r.resourceId}}">{{r.resourcename}}</a>
              <a href="/generateRSS?rval={{r.resourceId}}"><img src="/stylesheets/rss.png" style="width:10px;height:10px;"></a>
          </td>
-         <td><a href="/resourceinfo?rval={{r.reservationowner}}">{{r.reservationowner}}</a></td>
-         <td>{{r.reservationtime.time()}}</td>
-         <td>{{r.reservationtime.date()}}</td>
-         <td>{{r.reservationduration}}</td>
+         <td class="cell"><a href="/resourceinfo?rval={{r.reservationowner}}">{{r.reservationowner}}</a></td>
+         <td class="cell">{{r.reservationtime.time()}}</td>
+         <td class="cell">{{r.reservationtime.date()}}</td>
+         <td class="cell">{{r.reservationduration}}</td>
          {% if user == r.reservationowner %}
-         <td><a href="/deletereservation?rval={{r.reservationid}}">DELETE</a></td>
+         <td class="cell"><a href="/deletereservation?rval={{r.reservationid}}">DELETE</a></td>
          {% endif %}
          </tr>
    </tbody>  
@@ -54,33 +53,30 @@
    </form>
    <br>
    <br>
-   <br>
-   <br>
-  <label>All Resources</label>
+   <h3>All Resources in the system</h3>
   <br>
-   <br>
-  <table class="tagtable" border=1>
+  <table class="table" border=1>
   <thead>
-      <tr>
-         <th>RESOURCE NAME</th>
-         <th>AVAILABILITY</th>
-         <th>TAGS</th>
-         <th>NUMBER OF PAST RESERVATIONS</th>
+      <tr class="row header green">
+         <th class="cell">RESOURCE NAME</th>
+         <th class="cell">AVAILABILITY</th>
+         <th class="cell">TAGS</th>
+         <th class="cell">NUMBER OF PAST RESERVATIONS</th>
       </tr>    
    </thead> 
    <tbody>
-      <tr>     
+      <tr class="row">     
         {% if resources %}
         {% for r in resources %}
-         <td><a href="/addreservation?rval={{r.resourceid}}">{{r.name}}</a>
+         <td class="cell"><a href="/addreservation?rval={{r.resourceid}}">{{r.name}}</a>
              <a href="/generateRSS?rval={{r.resourceid}}"><img src="/stylesheets/rss.png" style="width:10px;height:10px;"></a>
-        <td>{{r.starttime.time()}} - {{r.endtime.time()}}</td>
-        <td>
+        <td class="cell">{{r.starttime.time()}} - {{r.endtime.time()}}</td>
+        <td class="cell">
         {% for t in r.tags %}
         <a href="/resourcetag?tagval={{t}}">&nbsp{{t}}</a>  
         {% endfor %}
         </td>
-        <td>{{r.reservedinpastcount}}</td>
+        <td class="cell">{{r.reservedinpastcount}}</td>
       </tr>
    </tbody>  
     {% endfor %}
@@ -88,36 +84,34 @@
    </table>
    <br>
    <br>
+   <h3>All Resources created by the user</h3>
    <br>
    <br>
-   <label>All Resources created by the user</label>
-   <br>
-   <br>
-  <table class="tagtable" border=1>
+  <table class="table" border=1>
   <thead>
-      <tr>
-         <th>RESOURCE NAME</th>
-         <th>AVAILABILITY</th>
-         <th>TAGS</th>
-         <th>NUMBER OF PAST RESERVATIONS</th>
+      <tr class="row header blue">
+         <th class="cell">RESOURCE NAME</th>
+         <th class="cell">AVAILABILITY</th>
+         <th class="cell">TAGS</th>
+         <th class="cell">NUMBER OF PAST RESERVATIONS</th>
          
       </tr>    
    </thead> 
    <tbody>
-      <tr>     
+      <tr class="row">     
         {% if ownerresources %}
         {% for r in ownerresources %}
-         <td>
+         <td class="cell">
          <a href="/addreservation?rval={{r.resourceid}}">{{r.name}}</a>
          <a href="/generateRSS?rval={{r.resourceid}}"><img src="/stylesheets/rss.png" style="width:10px;height:10px;"></a>
          </td>
-         <td>{{r.starttime.time()}} - {{r.endtime.time()}}</td>
-        <td>
+         <td class="cell">{{r.starttime.time()}} - {{r.endtime.time()}}</td>
+        <td class="cell">
         {% for t in r.tags %}
         <a href="/resourcetag?tagval={{t}}">{{t}}</a>  
         {% endfor %}
         </td>
-        <td>{{r.reservedinpastcount}}</td>
+        <td class="cell">{{r.reservedinpastcount}}</td>
       </tr>
    </tbody>  
     {% endfor %}
