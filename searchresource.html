@@ -12,9 +12,6 @@
   <br>
   <form id="searchform" action="/searchresource" method="post">  
   <h1>Search Resource by name or by availability</h1>
-  <label>Resource Name:</label>    
-  <input type="text" id="name" name = "name" value="{{ resourcename }}">
-  <br>
   {% if uierror %}
   <br>
   <div class="error">
@@ -22,6 +19,9 @@
   </div>
   <br>
   {% endif %}
+  <label>Resource Name:</label>    
+  <input type="text" id="name" name = "name" value="{{ resourcename }}">
+  <br>
   <br>
   <label>Resource Availability Time:</label>    
   <input type="time" id="starttime" name = "starttime" value="{{ resourcestarttime }}">
@@ -48,9 +48,8 @@
       </tr>    
    </thead> 
    <tbody>
+    {% for r in resourcelist %}
       <tr class="row">     
-
-        {% for r in resourcelist %}
          <td class="cell"><a href="/addreservation?rval={{r.resourceid}}">{{r.name}}</a>
              <a href="/generateRSS?rval={{r.resourceid}}"><img src="/stylesheets/rss.png" style="width:10px;height:10px;"></a>
          </td>
@@ -58,8 +57,8 @@
          <td class="cell"><a href="/resourceinfo?rval={{r.resourceowner}}">{{r.resourceowner}}</a></td>
          <td class="cell">{{r.reservedinpastcount}}</td>
       </tr>
-   </tbody>  
     {% endfor %}
+   </tbody>  
    </table>
    {% endif %}
    </form>

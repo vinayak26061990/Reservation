@@ -12,7 +12,14 @@
   <br>
   <form id="addform" action="/addResource"  method="post" > 
     <h1>Add Resource</h1>
-   <label>Resource Name:</label>    
+  {% if uierror %}
+  <br>
+  <div class="error">
+  <label>{{uierror}}</label>
+  </div>
+  <br>
+  {% endif %}
+  <label>Resource Name:</label>    
   <input type="text" id="name" name = "name" value="{{ resourcename }}"  required>
   <br>
   <br>

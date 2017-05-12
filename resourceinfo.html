@@ -30,9 +30,9 @@
       </tr>    
    </thead>
    <tbody>
+      {% if reservations %}
+      {% for r in reservations %}
       <tr class="row">     
-        {% if reservations %}
-        {% for r in reservations %}
          <td  class="cell"><a href="/addreservation?rval={{r.resourceId}}">{{r.resourcename}}</a>
              <a href="/generateRSS?rval={{r.resourceId}}"><img src="/stylesheets/rss.png" style="width:10px;height:10px;"></a>
          </td>
@@ -43,10 +43,10 @@
          {% if user == r.reservationowner %}
          <td  class="cell"><a href="/deletereservation?rval={{r.reservationid}}">DELETE</a></td>
          {% endif %}
-         </tr>
+      </tr>
+      {% endfor %}
+      {% endif %}
    </tbody>  
-    {% endfor %}
-    {% endif %}
    </table>
    </form>
    <br>
@@ -60,13 +60,12 @@
          <th class="cell">AVAILABILITY</th>
          <th class="cell">TAGS</th>
          <th class="cell">NUMBER OF PAST RESERVATIONS</th>
-         
       </tr>    
    </thead> 
    <tbody>
+      {% if ownerresources %}
+      {% for r in ownerresources %}
       <tr class="row">     
-        {% if ownerresources %}
-        {% for r in ownerresources %}
          <td class="cell"><a href="/addreservation?rval={{r.resourceid}}">{{r.name}}</a>
          <a href="/generateRSS?rval={{r.resourceid}}"><img src="/stylesheets/rss.png" style="width:10px;height:10px;"></a>
          </td>
@@ -78,9 +77,9 @@
         </td>
         <td class="cell">{{r.reservedinpastcount}}</td>
       </tr>
+      {% endfor %}
+      {% endif %}
    </tbody>  
-    {% endfor %}
-    {% endif %}
    </table>
   </body>
 </html>

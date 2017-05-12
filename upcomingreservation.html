@@ -7,8 +7,6 @@
   <body>
   <ul>
   <li><a class="active" href="/">Home</a></li>
-
-  
   </ul>
   <br>
   <br>
@@ -27,27 +25,26 @@
          <th class="cell">RESERVATION DATE</th>
          <th class="cell">DURATION</th>
          <th class="cell">DELETE RESERVATION</th>
-         
       </tr>    
    </thead>
    <tbody>
+      {% if UpcomingReservations %}
+      {% for r in UpcomingReservations %}  
       <tr class="row">     
-        {% if UpcomingReservations %}
-        {% for r in UpcomingReservations %}
-         <td class="cell"><a href="/addreservation?rval={{r.resourceId}}">{{r.resourcename}}</a>
+        <td class="cell"><a href="/addreservation?rval={{r.resourceId}}">{{r.resourcename}}</a>
              <a href="/generateRSS?rval={{r.resourceId}}"><img src="/stylesheets/rss.png" style="width:10px;height:10px;"></a>
-         </td>
-         <td class="cell"><a href="/resourceinfo?rval={{r.reservationowner}}">{{r.reservationowner}}</a></td>
-         <td class="cell">{{r.reservationtime.time()}}</td>
-         <td class="cell">{{r.reservationtime.date()}}</td>
-         <td class="cell">{{r.reservationduration}}</td>
+        </td>
+        <td class="cell"><a href="/resourceinfo?rval={{r.reservationowner}}">{{r.reservationowner}}</a></td>
+        <td class="cell">{{r.reservationtime.time()}}</td>
+        <td class="cell">{{r.reservationtime.date()}}</td>
+        <td class="cell">{{r.reservationduration}}</td>
          {% if user == r.reservationowner %}
          <td class="cell"><a href="/deletereservation?rval={{r.reservationid}}">DELETE</a></td>
          {% endif %}
-         </tr>
-   </tbody>  
+      </tr>
     {% endfor %}
     {% endif %}
+   </tbody>  
    </table>
    </form>
    <br>

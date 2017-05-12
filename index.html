@@ -32,9 +32,9 @@
       </tr>    
    </thead>
    <tbody>
+    {% if reservations %}
+    {% for r in reservations %}
       <tr class="row">     
-        {% if reservations %}
-        {% for r in reservations %}
          <td class="cell"><a href="/addreservation?rval={{r.resourceId}}">{{r.resourcename}}</a>
              <a href="/generateRSS?rval={{r.resourceId}}"><img src="/stylesheets/rss.png" style="width:10px;height:10px;"></a>
          </td>
@@ -46,9 +46,9 @@
          <td class="cell"><a href="/deletereservation?rval={{r.reservationid}}">DELETE</a></td>
          {% endif %}
          </tr>
-   </tbody>  
     {% endfor %}
     {% endif %}
+   </tbody>  
    </table>
    </form>
    <br>
@@ -65,11 +65,12 @@
       </tr>    
    </thead> 
    <tbody>
-      <tr class="row">     
         {% if resources %}
         {% for r in resources %}
+        <tr class="row">     
          <td class="cell"><a href="/addreservation?rval={{r.resourceid}}">{{r.name}}</a>
              <a href="/generateRSS?rval={{r.resourceid}}"><img src="/stylesheets/rss.png" style="width:10px;height:10px;"></a>
+         </td>
         <td class="cell">{{r.starttime.time()}} - {{r.endtime.time()}}</td>
         <td class="cell">
         {% for t in r.tags %}
@@ -78,9 +79,9 @@
         </td>
         <td class="cell">{{r.reservedinpastcount}}</td>
       </tr>
-   </tbody>  
     {% endfor %}
     {% endif %}
+   </tbody>  
    </table>
    <br>
    <br>
@@ -98,9 +99,10 @@
       </tr>    
    </thead> 
    <tbody>
+    {% if ownerresources %}
+    {% for r in ownerresources %}
       <tr class="row">     
-        {% if ownerresources %}
-        {% for r in ownerresources %}
+
          <td class="cell">
          <a href="/addreservation?rval={{r.resourceid}}">{{r.name}}</a>
          <a href="/generateRSS?rval={{r.resourceid}}"><img src="/stylesheets/rss.png" style="width:10px;height:10px;"></a>
@@ -113,10 +115,10 @@
         </td>
         <td class="cell">{{r.reservedinpastcount}}</td>
       </tr>
-   </tbody>  
     {% endfor %}
     {% endif %}
-   </table>
+    </tbody>  
+    </table>
   </body>
 </html>
 {% endautoescape %}

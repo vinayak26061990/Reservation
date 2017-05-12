@@ -25,7 +25,6 @@ body {
 
 .row:nth-of-type(odd) {
   background: #e9e9e9;
-  text-align: left;
 
 }
 .row.header {
@@ -43,15 +42,16 @@ body {
   background: #2980b9;
 }
 
+
+
 .cell {
   padding: 6px 12px;
-  display: table-cell;
-  border: solid 2px lightgrey;
   height: 50px;
   vertical-align: left; 
   text-align: center;
-   
+
 }
+
 
 ul {
     list-style-type: none;
