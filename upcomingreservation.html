@@ -31,8 +31,9 @@
       {% if UpcomingReservations %}
       {% for r in UpcomingReservations %}  
       <tr class="row">     
-        <td class="cell"><a href="/addreservation?rval={{r.resourceId}}">{{r.resourcename}}</a>
-             <a href="/generateRSS?rval={{r.resourceId}}"><img src="/stylesheets/rss.png" style="width:10px;height:10px;"></a>
+        <td class="cell">
+          <a href="/addreservation?rval={{r.resourceId}}">{{r.resourcename}}</a>
+          <a href="#" class="disabled"><img src="/stylesheets/rss.png" style="width:10px;height:10px;"></a>
         </td>
         <td class="cell"><a href="/resourceinfo?rval={{r.reservationowner}}">{{r.reservationowner}}</a></td>
         <td class="cell">{{r.reservationtime.time()}}</td>

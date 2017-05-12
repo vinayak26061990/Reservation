@@ -51,7 +51,7 @@
     {% for r in resourcelist %}
       <tr class="row">     
          <td class="cell"><a href="/addreservation?rval={{r.resourceid}}">{{r.name}}</a>
-             <a href="/generateRSS?rval={{r.resourceid}}"><img src="/stylesheets/rss.png" style="width:10px;height:10px;"></a>
+           <a href="#" class="disabled"><img src="/stylesheets/rss.png" style="width:10px;height:10px;"></a>
          </td>
          <td class="cell">{{r.starttime.time()}} - {{r.endtime.time()}}</td>
          <td class="cell"><a href="/resourceinfo?rval={{r.resourceowner}}">{{r.resourceowner}}</a></td>
