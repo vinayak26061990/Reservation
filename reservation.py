@@ -255,14 +255,18 @@ class Addreservation(webapp2.RequestHandler):
         timediff= int((r.endtime- r.starttime).total_seconds() / 60)
         if r is None:
             error = 'The resource is not present'
-        elif r.starttime.time() > availabilitystarttime.time()  or r.endtime.time() < availabilityendtime.time():
-            error = 'The resource ' + r.name + ' cannot be reserved for the given duration as it is outside the available time range of resource.'
+        elif availabilitystarttime.time() < r.starttime.time():
+            error = 'The resource ' + r.name + ' cannot be reserved for the given duration as reservation start time less than resource start time.'
+        elif availabilitystarttime.time() > r.endtime.time():  
+            error = 'The resource ' + r.name + ' cannot be reserved for the given duration as reservation start time greater than resource end time.' 
+        elif availabilityendtime.time() >  r.endtime.time():     
+            error = 'The resource ' + r.name + ' cannot be reserved for the given duration as reservation end time greater than resource end time.' 
         elif reservationdate < currentdatetime.date():
             error = 'The reservation date cannot be a past day'
         elif availabilitystarttime < currentdatetime:
             error = 'The reservation time cannot be a past time'    
         elif  reservationduration > timediff:  
-            error = 'The resource ' + r.name + ' cannot be reserved for the given duration as it is outside the available time range of resource.'
+            error = 'The resource ' + r.name + ' cannot be reserved for the given duration as entered reservation minutes exceeds resource availability.'
 
 
         if error:
