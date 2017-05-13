@@ -295,6 +295,18 @@ class Addreservation(webapp2.RequestHandler):
             uid_str = uid.urn
             res.reservationid = uid_str[9:]
             res.put()
+            message = mail.EmailMessage()
+            sender = 'vr840@nyu.edu'
+            to = users.get_current_user().email()
+            subject = 'Reservation Created for Resource ' \
+                + r.name
+            body = \
+                """Dear Sir/Madam,Your reservation has been created for the resource """ \
+                + r.name + """The reservation is created on """ \
+                + str(res.reservationtime) + """ for a duration """ \
+                + str(reservationduration) + """ minutes.""" \
+                + """Please let us know if you have any questions.The Reservation System Team"""
+            mail.send_mail(sender=sender, to=to, subject=subject, body=body)
             self.redirect('/')
 
 
