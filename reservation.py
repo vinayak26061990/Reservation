@@ -155,7 +155,7 @@ class AddResource(webapp2.RequestHandler):
           self.redirect('/')
 
         else:
-            error = 'You have to provide name, start time and duration'  
+            error = 'You have to provide name, start time and end time'  
             template = JINJA_ENVIRONMENT.get_template('addResource.html')
             template_values = {'uierror': error}
             self.response.write(template.render(template_values))
