@@ -349,7 +349,6 @@ class EditResource(webapp2.RequestHandler):
         r.tags = resourcetags
         r.starttime = availabilitystarttime
         r.endtime = availabilityendtime
-        r.count = 0
         r.put()
         self.redirect('/')
 
